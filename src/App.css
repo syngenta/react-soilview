@@ -1,0 +1,5 @@
+.app-container {
+  display: grid;
+  grid-template-columns: 400px max-content;
+  height: 100vh;
+}
