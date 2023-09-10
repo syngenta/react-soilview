@@ -7,7 +7,7 @@ import { useAppContext } from "../../App";
 
 export default function MapLibreComponent() {
   const appContext = useAppContext();
-  const { stateMap, mapInstance, updateMapInstance } = appContext;
+  const { stateMap, mapInstance, updateMapInstance, setSelectedState } = appContext;
 
   useEffect(() => {
     if (!stateMap || mapInstance) return;
@@ -82,7 +82,7 @@ export default function MapLibreComponent() {
     if (mapInstance?.getCanvas()) {
       mapInstance.getCanvas().style.cursor = 'pointer';
     }
-    const featureId = event.features?.length ? event.features[0] : null;
+    const feature = event.features?.length ? event.features[0] : null;
     // logic to select state here
   };
 
@@ -92,14 +92,26 @@ export default function MapLibreComponent() {
     }
   }
 
+  const onMouseClick = (event) => {
+    const feature = event.features?.length ? event.features[0] : null;
+    if (feature) {
+      const selectedState = Array.from(stateMap.values()).find(s => s.name === feature.properties?.name);
+      setSelectedState(selectedState);
+    }
+  }
+
   useEffect(() => {
     if (!mapInstance) return;
     mapInstance.on("mousemove", "us-states-fill", onMouseMove);
-    mapInstance.on('mouseleave', 'us-states-fill', onMouseLeave)
+    mapInstance.on('mouseleave', 'us-states-fill', onMouseLeave);
+    mapInstance.on("click", 'us-states-fill', onMouseClick);
+    
 
     return () => {
       if (!mapInstance) return;
       mapInstance.off("mouseMove", "us-states-fill", onMouseMove);
+      mapInstance.off('mouseleave', 'us-states-fill', onMouseLeave);
+      mapInstance.off("click", 'us-states-fill', onMouseClick);
     };
   }, [mapInstance]);
 

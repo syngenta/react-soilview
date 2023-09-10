@@ -14,12 +14,20 @@ export interface IApplicationContext {
   readonly stateMap: Map<string, State>;
   readonly mapInstance: any;
   readonly updateMapInstance: (map: any) => void;
+  readonly selectedState?: State;
+  readonly setSelectedState: (state?: State) => void;
+  readonly selectedDataOption?: string;
+  readonly setSelectedDataOption?: (option?: string) => void;
 }
 
 const ApplicationContext = createContext<IApplicationContext>({
   stateMap: new Map(),
   mapInstance: undefined,
   updateMapInstance: undefined,
+  selectedState: undefined,
+  setSelectedState: undefined,
+  selectedDataOption: undefined,
+  setSelectedDataOption: undefined
 });
 
 export const useAppContext = () => useContext(ApplicationContext);
@@ -27,6 +35,8 @@ export const useAppContext = () => useContext(ApplicationContext);
 function App() {
   const [stateMap, setStateMap] = useState<Map<string, State>>(new Map());
   const [mapInstance, setMapInstance] = useState<any>();
+  const [selectedState, setSelectedState] = useState<State>();
+  const [selectedDataOption, setSelectedDataOption] = useState<string>();
 
   useEffect(() => {
     const newStateList = usStates.features.reduce<Map<string, State>>(
@@ -48,6 +58,10 @@ function App() {
         stateMap: stateMap,
         mapInstance: mapInstance,
         updateMapInstance: setMapInstance,
+        selectedState,
+        setSelectedState,
+        selectedDataOption,
+        setSelectedDataOption
       }}
     >
       <div className="app-container">

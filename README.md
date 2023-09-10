@@ -22,6 +22,7 @@ In order to run the application, you will need to have the following software in
 
 * Node (v16.0.0 or higher)
 * npm or yarn
+* mdbtools to open General Soil Maps in .mdb format
 
 ### Installation
 
