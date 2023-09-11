@@ -13,16 +13,12 @@ It it capable of downloading and visualising data from both The gridded National
 
 This repository contains a fully executable frontend application built in React JS, and functions to download the data directly from the publicly available buckets.
 
-
-## Getting Started
-
 ### Prerequisites
 
 In order to run the application, you will need to have the following software installed:
 
 * Node (v16.0.0 or higher)
-* npm or yarn
-* mdbtools to open General Soil Maps in .mdb format
+* yarn
 
 ### Installation
 
@@ -34,6 +30,9 @@ or
 
 ### Usage
 
+To run the app (both the backend and frontend pieces, run the following command):
+
+`yarn web:serve`
 ### Contact
 
 ### Acknowledgment

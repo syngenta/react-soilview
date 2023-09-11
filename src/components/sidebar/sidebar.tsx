@@ -1,6 +1,7 @@
 import React from "react";
 import "./sidebar.css";
 import { useAppContext } from "../../App";
+import { parseMDBFile } from "./utils";
 
 const options = [
   {
@@ -26,8 +27,8 @@ const Sidebar: React.FC = () => {
   };
 
   const handleFileChange = (event) => {
-    console.log(event?.target?.files[0]);
-  }
+    parseMDBFile(event.target.files[0]);
+  };
 
   return (
     <div className="sidebar-container">
@@ -62,7 +63,11 @@ const Sidebar: React.FC = () => {
               To download your content,{" "}
               <a
                 target="_blank"
-                href="https://nrcs.app.box.com/v/soils/folder/17971946225"
+                href={
+                  selectedDataOption === "general"
+                    ? "https://nrcs.app.box.com/v/soils/folder/18247487156"
+                    : "https://nrcs.app.box.com/v/soils/folder/175284091466"
+                }
               >
                 click here
               </a>
@@ -71,7 +76,12 @@ const Sidebar: React.FC = () => {
         </div>
         <div>
           <span>3. Upload your data file (.mdb, .tiff)</span>
-          <input disabled={!selectedDataOption || !selectedState} type="file" accept=".tiff,.mdb" onChange={handleFileChange}/>
+          <input
+            disabled={!selectedDataOption || !selectedState}
+            type="file"
+            accept=".tiff,.mdb"
+            onChange={handleFileChange}
+          />
         </div>
       </div>
     </div>

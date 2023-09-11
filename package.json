@@ -1,20 +1,27 @@
 {
   "name": "soil-view-us",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "web:serve": "concurrently -k \"cross-env BROWSER=none node ./src/fs_utils/api.js\" \"yarn web:start\" ",
+    "web:start": "wait-on http://127.0.0.1:3001 && yarn dev"
   },
   "dependencies": {
+    "concurrently": "^8.2.1",
+    "cross-env": "^7.0.3",
+    "express": "^4.18.2",
     "maplibre-gl": "^3.3.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "wait-on": "^7.0.1"
   },
   "devDependencies": {
+    "@types/node": "^20.6.0",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.0.3",
