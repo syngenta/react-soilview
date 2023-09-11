@@ -6,6 +6,7 @@ export const parseMDBFile = async (file) => {
       method: "POST",
       body: formData,
     });
+    console.log(mdbFileResponse);
     if (mdbFileResponse.ok) {
       console.log("ok!");
     }
