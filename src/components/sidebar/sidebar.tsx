@@ -18,12 +18,16 @@ const Sidebar: React.FC = () => {
     useAppContext();
 
   const handleChangeSelect = (event) => {
-    if (event.target.value?.length) {
-      setSelectedDataOption(event.targer.value);
+    if (event?.target?.value?.length) {
+      setSelectedDataOption(event.target.value);
       return;
     }
     setSelectedDataOption(undefined);
   };
+
+  const handleFileChange = (event) => {
+    console.log(event?.target?.files[0]);
+  }
 
   return (
     <div className="sidebar-container">
@@ -42,6 +46,7 @@ const Sidebar: React.FC = () => {
             <select
               value={selectedDataOption}
               onChange={handleChangeSelect}
+              disabled={!selectedState}
               id="dataOptionSelect"
             >
               <option value={undefined}></option>
@@ -52,12 +57,23 @@ const Sidebar: React.FC = () => {
               ))}
             </select>
           </div>
+          {selectedDataOption && (
+            <span>
+              To download your content,{" "}
+              <a
+                target="_blank"
+                href="https://nrcs.app.box.com/v/soils/folder/17971946225"
+              >
+                click here
+              </a>
+            </span>
+          )}
         </div>
         <div>
-
+          <span>3. Upload your data file (.mdb, .tiff)</span>
+          <input disabled={!selectedDataOption || !selectedState} type="file" accept=".tiff,.mdb" onChange={handleFileChange}/>
         </div>
       </div>
-      <span>footer</span>
     </div>
   );
 };
