@@ -16,10 +16,11 @@
     "cross-env": "^7.0.3",
     "express": "^4.18.2",
     "formidable": "^3.5.1",
+    "gdal": "^0.11.1",
     "maplibre-gl": "^3.3.1",
-    "mdb-reader": "^2.2.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "unzipper": "^0.10.14",
     "wait-on": "^7.0.1"
   },
   "devDependencies": {

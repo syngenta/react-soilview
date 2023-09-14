@@ -1,7 +1,7 @@
 import React from "react";
 import "./sidebar.css";
 import { useAppContext } from "../../App";
-import { parseMDBFile } from "./utils";
+import { parseSoilFile } from "./utils";
 
 const options = [
   {
@@ -15,7 +15,7 @@ const options = [
 ];
 
 const Sidebar: React.FC = () => {
-  const { selectedState, selectedDataOption, setSelectedDataOption } =
+  const { selectedState, selectedDataOption, setSelectedDataOption, mapInstance } =
     useAppContext();
 
   const handleChangeSelect = (event) => {
@@ -26,8 +26,26 @@ const Sidebar: React.FC = () => {
     setSelectedDataOption(undefined);
   };
 
-  const handleFileChange = (event) => {
-    parseMDBFile(event.target.files[0]);
+  const handleFileChange = async (event) => {
+    if (!mapInstance) return;
+    const content = await parseSoilFile(event.target.files[0]);
+
+    mapInstance.addSource(`soil-map-${selectedState}-source`, {
+      type: "geojson",
+      data: content,
+    });
+
+    mapInstance.addLayer({
+      id: `soil-map-${selectedState}-layer`,
+      type: "fill",
+      source: `soil-map-${selectedState}-source`,
+      layout: {},
+      paint: {
+        "fill-color": "#5f5f5f",
+        "fill-opacity": 0.6,
+      },
+    });
+
   };
 
   return (
@@ -75,11 +93,11 @@ const Sidebar: React.FC = () => {
           )}
         </div>
         <div>
-          <span>3. Upload your data file (.mdb, .tiff)</span>
+          <span>3. Upload your data file (.zip, .tiff)</span>
           <input
             disabled={!selectedDataOption || !selectedState}
             type="file"
-            accept=".tiff,.mdb"
+            accept=".tiff,.zip"
             onChange={handleFileChange}
           />
         </div>
